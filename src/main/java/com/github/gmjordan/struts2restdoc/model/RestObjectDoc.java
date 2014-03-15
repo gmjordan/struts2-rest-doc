@@ -1,6 +1,7 @@
 package com.github.gmjordan.struts2restdoc.model;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -21,6 +22,13 @@ public class RestObjectDoc implements Comparable<RestObjectDoc> {
 	@SuppressWarnings("rawtypes")
 	public static RestObjectDoc buildFromAnnotation(RestObject annotation, Class clazz) {
 		List<RestObjectFieldDoc> fieldDocs = new ArrayList<RestObjectFieldDoc>();
+
+		for (Method m : clazz.getDeclaredMethods()) {
+			if ((m.getAnnotation(RestObjectField.class) != null)) {
+				fieldDocs.add(RestObjectFieldDoc.buildFromAnnotation(m.getAnnotation(RestObjectField.class), m));
+			}
+		}
+
 		for (Field field : clazz.getDeclaredFields()) {
 			if (field.getAnnotation(RestObjectField.class) != null) {
 				fieldDocs.add(RestObjectFieldDoc.buildFromAnnotation(field.getAnnotation(RestObjectField.class), field));

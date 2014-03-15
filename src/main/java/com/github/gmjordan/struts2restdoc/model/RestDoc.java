@@ -42,6 +42,14 @@ public class RestDoc {
 		this.apis = apis;
 	}
 
+	public Set<RestObjectDoc> getObjects() {
+		return objects;
+	}
+
+	public void setObjects(Set<RestObjectDoc> objects) {
+		this.objects = objects;
+	}
+
 	@Override
 	public String toString() {
 		return "JSONDoc [version=" + version + ", basePath=" + basePath + ", apis=" + apis + ", objects=" + objects + "]";

@@ -7,7 +7,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Documented
-@Target(value = ElementType.TYPE)
+@Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RestAction {
 	/**
@@ -23,4 +23,6 @@ public @interface RestAction {
 	 * @return
 	 */
 	public String name();
+
+	public String[] actionHeaderList() default {};
 }

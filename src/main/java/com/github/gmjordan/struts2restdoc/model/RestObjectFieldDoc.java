@@ -1,6 +1,7 @@
 package com.github.gmjordan.struts2restdoc.model;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
 import java.lang.reflect.WildcardType;
@@ -45,6 +46,21 @@ public class RestObjectFieldDoc {
 		restPojoFieldDoc.setMapKeyObject(typeChecks[1]);
 		restPojoFieldDoc.setMapValueObject(typeChecks[2]);
 		restPojoFieldDoc.setMap(typeChecks[3]);
+		return restPojoFieldDoc;
+	}
+
+	public static RestObjectFieldDoc buildFromAnnotation(RestObjectField annotation, Method method) {
+		RestObjectFieldDoc restPojoFieldDoc = new RestObjectFieldDoc();
+		restPojoFieldDoc.setName(method.getName().replace("get", "").toLowerCase());
+		restPojoFieldDoc.setDescription(annotation.description());
+		// String[] typeChecks = getFieldObject(field);
+		restPojoFieldDoc.setType(method.getReturnType().getSimpleName().toLowerCase());
+		restPojoFieldDoc.setMultiple(String.valueOf(RestActionUtil.isMultiple(method)));
+		restPojoFieldDoc.setFormat(annotation.format());
+		restPojoFieldDoc.setAllowedvalues(annotation.allowedvalues());
+		// restPojoFieldDoc.setMapKeyObject(typeChecks[1]);
+		// restPojoFieldDoc.setMapValueObject(typeChecks[2]);
+		// restPojoFieldDoc.setMap(typeChecks[3]);
 		return restPojoFieldDoc;
 	}
 
